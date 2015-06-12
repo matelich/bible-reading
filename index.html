@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Daily Bible Reading</title>
+    </head>
+    <body>
+        <h1>Welcome to the Daily Reading Plan page!</h1>
+        <div id="today"></div>
+        <div id="reading"></div>
+        <div id="biblegateway"></div>
+        <script src="domready.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            function loadPlan(which) {
+                var req = new XMLHttpRequest();
+                req.open("GET",which,false);
+                req.send(null);
+                window.plan = JSON.parse(req.responseText);
+            }
+            function getPlanIndex() {
+                var today = new Date();
+
+                var dayCount = [0, 31, 59, 90, 120, 151, 181, 212, 243, 273, 304, 334];
+                var mn = today.getMonth();
+                var dn = today.getDate();
+                if(mn == 1 && dn == 29) { return 365; }
+                var dayOfYear = dayCount[mn] + dn;
+                return dayOfYear-1;
+            };
+            DomReady.ready(function() {
+                loadPlan("15minute.js");
+                var reading = window.plan.readings[getPlanIndex()];
+                document.getElementById('today').innerHTML = 'Today is '+reading.date;
+                document.getElementById('reading').innerHTML = 'Our reading for today is ' + reading.passage;
+                var a = document.createElement('a');
+                a.href = 'https://www.biblegateway.com/passage/?search='+encodeURIComponent(reading.passage)+'&version=NIV';
+                a.innerHTML = "Read it!";
+                document.getElementById('biblegateway').appendChild(a);                
+            });
+        </script>
+    </body>
+</html>
