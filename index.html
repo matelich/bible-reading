@@ -12,7 +12,7 @@
             <h3>Options</h3>
             <div><strong>Translation:</strong> <input type="text" name="translation" id="translation" maxlength="5"></div>
             <h4>Future Options, current values</h4>
-            <div><strong>Reading Plan:</strong> 5 minutes / day</div>
+            <div><strong>Reading Plan:</strong> 15 minutes / day</div>
             <div><strong>Website:</strong> bible gateway</div>
         </fieldset>
         <script src="domready.js" type="text/javascript"></script>
@@ -47,10 +47,10 @@
             }
             
             DomReady.ready(function() {
-                if(localStorage['plan'] == '15') {
-                    loadPlan("15minute.js");
-                } else {
+                if(localStorage['plan'] == '5') {
                     loadPlan("5minute.js");
+                } else {
+                    loadPlan("15minute.js");
                 }
                 var trans = localStorage['translation'] || 'NIV';
                 var translation_input = document.getElementById('translation');
