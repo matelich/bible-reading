@@ -15,6 +15,7 @@
             <div><strong>Reading Plan:</strong> 15 minutes / day</div>
             <div><strong>Website:</strong> bible gateway</div>
         </fieldset>
+        <div id="missed"></div>
         <script src="domready.js" type="text/javascript"></script>
         <script type="text/javascript">
             function loadPlan(which) {
@@ -43,7 +44,15 @@
                 a.innerHTML = "Read it!";
                 var bg = document.getElementById('biblegateway');
                 bg.innerHTML = "";
-                bg.appendChild(a);                
+                bg.appendChild(a);
+
+                var yesterreading = window.plan.readings[getPlanIndex()-1]; //todo: fix new years
+                var ay = document.createElement('a');
+                ay.href = 'https://www.biblegateway.com/passage/?search='+encodeURIComponent(yesterreading.passage)+'&version='+document.getElementById('translation').value;
+                ay.innerHTML = "Read it!";
+                var yesterday = document.getElementById('missed');
+                yesterday.innerHTML = "If you missed yesterday, ";
+                yesterday.appendChild(ay);
             }
             
             DomReady.ready(function() {
